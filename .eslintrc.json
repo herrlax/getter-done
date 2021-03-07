@@ -1,0 +1,47 @@
+{
+    "env": {
+      "browser": true,
+      "es6": true,
+      "node": true
+    },
+    "extends": ["airbnb", "plugin:@typescript-eslint/recommended"],
+    "globals": {
+      "Atomics": "readonly",
+      "SharedArrayBuffer": "readonly"
+    },
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+      "ecmaFeatures": {
+        "jsx": true
+      },
+      "ecmaVersion": 2018,
+      "sourceType": "module"
+    },
+    "plugins": ["react", "@typescript-eslint", "react-hooks"],
+    "rules": {
+      "react-hooks/rules-of-hooks": "error",
+      "react-hooks/exhaustive-deps": "warn",
+      "react/jsx-filename-extension": "off",
+      "react/prop-types": "off",
+  
+      // fixes error 'React' was used before it was defined
+      "no-use-before-define": "off",
+      "comma-dangle": "off",
+      "object-curly-newline": "off",
+      "arrow-body-style": "off",
+  
+      "@typescript-eslint/no-unused-vars": "off",
+      "@typescript-eslint/explicit-function-return-type": "off",
+      "@typescript-eslint/explicit-module-boundary-types": "off",
+      "@typescript-eslint/no-var-requires": "off",
+  
+      "import/extensions": ["error", "never"],
+      "import/no-unresolved": "off",
+      "import/no-extraneous-dependencies": "off"
+    },
+    "overrides": [
+      {
+        "files": ["**/*.ts?(x)"]
+      }
+    ]
+  }
