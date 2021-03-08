@@ -1,4 +1,4 @@
-import React, { useContext, useMemo, useReducer } from 'react';
+import React, { useContext, useEffect, useMemo, useReducer } from 'react';
 import produce from 'immer';
 
 export type Task = {
@@ -11,6 +11,7 @@ export type Task = {
 type State = {
   data: Task[];
   addTask: {
+    pendingTask?: Task;
     isLoading: boolean;
     isError: boolean;
   };
@@ -29,9 +30,9 @@ type ReducerAction =
   | { type: 'add_task_init'; data: Task }
   | { type: 'add_task_success' }
   | { type: 'add_task_errored' }
-  | { type: 'sync_task_init' }
-  | { type: 'sync_task_success' }
-  | { type: 'sync_task_errored' };
+  | { type: 'sync_tasks_init' }
+  | { type: 'sync_tasks_success' }
+  | { type: 'sync_tasks_errored' };
 
 const TasksStateContext = React.createContext<State | undefined>(undefined);
 const TasksActionContext = React.createContext<Action | undefined>(undefined);
@@ -42,6 +43,10 @@ const curriedReducer: (state: State, action: ReducerAction) => State = produce(
       case 'add_task_init':
         draft.addTask.isLoading = true;
         draft.addTask.isError = false;
+        draft.addTask.pendingTask = action.data;
+
+        // todo remove this when file reader/writer is in place
+        draft.data = [...draft.data, action.data];
         return;
 
       case 'add_task_success':
@@ -54,17 +59,17 @@ const curriedReducer: (state: State, action: ReducerAction) => State = produce(
         draft.addTask.isError = true;
         return;
 
-      case 'sync_task_init':
+      case 'sync_tasks_init':
         draft.syncTasks.isLoading = true;
         draft.syncTasks.isError = false;
         return;
 
-      case 'sync_task_success':
+      case 'sync_tasks_success':
         draft.syncTasks.isLoading = false;
         draft.syncTasks.isError = false;
         return;
 
-      case 'sync_task_errored':
+      case 'sync_tasks_errored':
         draft.syncTasks.isLoading = false;
         draft.syncTasks.isError = true;
         return;
@@ -82,6 +87,7 @@ type ProviderProps = {
 const initialState = {
   data: [],
   addTask: {
+    pendingTask: undefined,
     isLoading: false,
     isError: false,
   },
@@ -103,12 +109,44 @@ const TasksProvider: React.FC<ProviderProps> = ({ data, children }) => {
     }
   );
 
+  useEffect(() => {
+    let isCurrent = true;
+
+    const update = async () => {
+      console.log('Adding task to file..');
+
+      // todo: enable this when file writer/reader is in place
+      //   try {
+      //     await addTaskToFile(state.addTask.pendingTask);
+
+      //     if (isCurrent) {
+      //       dispatch({ type: 'add_task_success' });
+      //       dispatch({ type: 'sync_tasks_init' });
+      //     }
+      //   } catch (e) {
+      //     console.error(e);
+
+      //     if (isCurrent) {
+      //       dispatch({ type: 'add_task_errored' });
+      //     }
+      //   }
+    };
+
+    if (state.addTask.isLoading && typeof state.addTask.pendingTask !== 'undefined') {
+      update();
+    }
+
+    return () => {
+      isCurrent = false;
+    };
+  }, [state.addTask.isLoading, state.addTask.pendingTask]);
+
   const actions = useMemo(() => ({
     addTask: (task: Task) => {
       dispatch({ type: 'add_task_init', data: task });
     },
     syncTasks: () => {
-      // todo
+      dispatch({ type: 'sync_tasks_init' });
     }
   }), []);
 
