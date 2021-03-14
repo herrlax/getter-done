@@ -31,7 +31,7 @@ type ReducerAction =
   | { type: 'add_task_success' }
   | { type: 'add_task_errored' }
   | { type: 'sync_tasks_init' }
-  | { type: 'sync_tasks_success' }
+  | { type: 'sync_tasks_success'; data: Task[] }
   | { type: 'sync_tasks_errored' };
 
 const TasksStateContext = React.createContext<State | undefined>(undefined);
@@ -44,14 +44,12 @@ const curriedReducer: (state: State, action: ReducerAction) => State = produce(
         draft.addTask.isLoading = true;
         draft.addTask.isError = false;
         draft.addTask.pendingTask = action.data;
-
-        // todo remove this when file reader/writer is in place
-        draft.data = [...draft.data, action.data];
         return;
 
       case 'add_task_success':
         draft.addTask.isLoading = false;
         draft.addTask.isError = false;
+        draft.addTask.pendingTask = undefined;
         return;
 
       case 'add_task_errored':
@@ -67,6 +65,7 @@ const curriedReducer: (state: State, action: ReducerAction) => State = produce(
       case 'sync_tasks_success':
         draft.syncTasks.isLoading = false;
         draft.syncTasks.isError = false;
+        draft.data = action.data;
         return;
 
       case 'sync_tasks_errored':
@@ -102,37 +101,71 @@ const TasksProvider: React.FC<ProviderProps> = ({ data, children }) => {
     curriedReducer,
     {
       ...initialState,
-      data: [
-        ...initialState.data,
-        ...data
-      ]
+      data: [...initialState.data, ...data],
     }
   );
+
+  useEffect(() => {
+    if (state.addTask.isError) {
+      console.error('Failed to add task');
+    }
+  }, [state.addTask.isError]);
+
+  useEffect(() => {
+    if (state.syncTasks.isError) {
+      console.error('Failed to sync tasks');
+    }
+  }, [state.syncTasks.isError]);
 
   useEffect(() => {
     let isCurrent = true;
 
     const update = async () => {
-      console.log('Adding task to file..');
+      try {
+        const res = await window.electron.getTasks();
 
-      // todo: enable this when file writer/reader is in place
-      //   try {
-      //     await addTaskToFile(state.addTask.pendingTask);
-
-      //     if (isCurrent) {
-      //       dispatch({ type: 'add_task_success' });
-      //       dispatch({ type: 'sync_tasks_init' });
-      //     }
-      //   } catch (e) {
-      //     console.error(e);
-
-      //     if (isCurrent) {
-      //       dispatch({ type: 'add_task_errored' });
-      //     }
-      //   }
+        if (isCurrent) {
+          dispatch({ type: 'sync_tasks_success', data: res });
+        }
+      } catch (e) {
+        if (isCurrent) {
+          dispatch({ type: 'sync_tasks_errored' });
+        }
+      }
     };
 
-    if (state.addTask.isLoading && typeof state.addTask.pendingTask !== 'undefined') {
+    if (state.syncTasks.isLoading) {
+      update();
+    }
+  }, [state.syncTasks.isLoading]);
+
+  useEffect(() => {
+    let isCurrent = true;
+
+    const update = async () => {
+      if (typeof state.addTask.pendingTask !== 'undefined') {
+        try {
+          await window.electron.writeTasks([
+            ...state.data,
+            state.addTask.pendingTask,
+          ]);
+
+          if (isCurrent) {
+            dispatch({ type: 'add_task_success' });
+            dispatch({ type: 'sync_tasks_init' });
+          }
+        } catch (e) {
+          if (isCurrent) {
+            dispatch({ type: 'add_task_errored' });
+          }
+        }
+      }
+    };
+
+    if (
+      state.addTask.isLoading &&
+      typeof state.addTask.pendingTask !== 'undefined'
+    ) {
       update();
     }
 
@@ -141,14 +174,17 @@ const TasksProvider: React.FC<ProviderProps> = ({ data, children }) => {
     };
   }, [state.addTask.isLoading, state.addTask.pendingTask]);
 
-  const actions = useMemo(() => ({
-    addTask: (task: Task) => {
-      dispatch({ type: 'add_task_init', data: task });
-    },
-    syncTasks: () => {
-      dispatch({ type: 'sync_tasks_init' });
-    }
-  }), []);
+  const actions = useMemo(
+    () => ({
+      addTask: (task: Task) => {
+        dispatch({ type: 'add_task_init', data: task });
+      },
+      syncTasks: () => {
+        dispatch({ type: 'sync_tasks_init' });
+      },
+    }),
+    []
+  );
 
   return (
     <TasksStateContext.Provider value={state}>
