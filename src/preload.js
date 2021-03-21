@@ -2,12 +2,6 @@ const ipcRenderer = require('electron').ipcRenderer;
 const contextBridge = require('electron').contextBridge;
 
 contextBridge.exposeInMainWorld('electron', {
-  // writeFile: async (content) => {
-  //   return ipcRenderer.invoke("write-file", content);
-  // },
-  // readFile: async (fileName) => {
-  //   return ipcRenderer.invoke("read-file", fileName);
-  // },
   getTasks: async () => {
     try {
       const res = await ipcRenderer.invoke('read-file', 'tasks.json');
@@ -20,7 +14,7 @@ contextBridge.exposeInMainWorld('electron', {
   writeTasks: async (tasks) => {
     return ipcRenderer.invoke('write-file', {
       content: tasks,
-      fileName: 'tasks.json',
+      fileName: 'tasks.json'
     });
-  },
+  }
 });

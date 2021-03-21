@@ -88,12 +88,12 @@ const initialState = {
   addTask: {
     pendingTask: undefined,
     isLoading: false,
-    isError: false,
+    isError: false
   },
   syncTasks: {
     isLoading: false,
-    isError: false,
-  },
+    isError: false
+  }
 };
 
 const TasksProvider: React.FC<ProviderProps> = ({ data, children }) => {
@@ -101,7 +101,7 @@ const TasksProvider: React.FC<ProviderProps> = ({ data, children }) => {
     curriedReducer,
     {
       ...initialState,
-      data: [...initialState.data, ...data],
+      data: [...initialState.data, ...data]
     }
   );
 
@@ -145,10 +145,7 @@ const TasksProvider: React.FC<ProviderProps> = ({ data, children }) => {
     const update = async () => {
       if (typeof state.addTask.pendingTask !== 'undefined') {
         try {
-          await window.electron.writeTasks([
-            ...state.data,
-            state.addTask.pendingTask,
-          ]);
+          await window.electron.writeTasks([...state.data, state.addTask.pendingTask]);
 
           if (isCurrent) {
             dispatch({ type: 'add_task_success' });
@@ -162,10 +159,7 @@ const TasksProvider: React.FC<ProviderProps> = ({ data, children }) => {
       }
     };
 
-    if (
-      state.addTask.isLoading &&
-      typeof state.addTask.pendingTask !== 'undefined'
-    ) {
+    if (state.addTask.isLoading && typeof state.addTask.pendingTask !== 'undefined') {
       update();
     }
 
@@ -181,7 +175,7 @@ const TasksProvider: React.FC<ProviderProps> = ({ data, children }) => {
       },
       syncTasks: () => {
         dispatch({ type: 'sync_tasks_init' });
-      },
+      }
     }),
     []
   );
