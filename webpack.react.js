@@ -1,9 +1,10 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const path = require('path');
+const webpack = require('webpack');
 
 module.exports = {
   mode: 'development',
-  entry: './src/renderer.tsx',
+  entry: './src/ui/renderer.tsx',
   target: 'electron-renderer',
   devtool: 'source-map',
   devServer: {
@@ -22,7 +23,7 @@ module.exports = {
       {
         test: /\.ts(x?)$/,
         include: /src/,
-        use: [{ loader: 'ts-loader' }]
+        use: [{ loader: 'ts-loader' }],
       },
       {
         test: /\.css$/i,
@@ -38,5 +39,6 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: './src/index.html',
     }),
+    new webpack.ExternalsPlugin('commonjs', ['electron']),
   ],
 };

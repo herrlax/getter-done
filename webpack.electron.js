@@ -1,6 +1,7 @@
 const path = require('path');
 
-module.exports = {
+(module.exports = {
+  name: 'main',
   mode: 'development',
   // Electron Entrypoint
   entry: './src/main.ts',
@@ -24,4 +25,17 @@ module.exports = {
     path: `${__dirname}/dist`,
     filename: 'main.js',
   },
-};
+  node: {
+    __dirname: false, // new remove?
+  },
+}),
+  {
+    name: 'preload',
+    mode: 'development',
+    entry: './src/preload.js',
+    target: 'electron-preload',
+    output: {
+      path: `${__dirname}/dist`,
+      filename: 'preload.js',
+    },
+  };
