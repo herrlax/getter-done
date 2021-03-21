@@ -7,8 +7,6 @@ type Task = {
 
 declare interface Window {
   electron: {
-    // writeFile(args: { content: any; fileName: string }): Promise<void>;
-    // readFile(fileName: string): Promise<any>;
     writeTasks(tasks: Task[]): Promise<void>;
     getTasks(): Promise<Task[]>;
   };
