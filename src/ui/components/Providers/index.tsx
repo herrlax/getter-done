@@ -14,7 +14,7 @@ const Providers: React.FC = ({ children }) => {
         const res = await window.electron.getTasks();
 
         setData({
-          tasks: res,
+          tasks: res
         });
       } catch (e) {
         console.error(e);

@@ -10,7 +10,7 @@ const App = () => {
       id: '893749',
       title: 'Do the dishes',
       date: new Date('2021-02-03'),
-      comments: [],
+      comments: []
     });
   };
 

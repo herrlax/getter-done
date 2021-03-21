@@ -13,8 +13,8 @@ const createWindow = (): void => {
       contextIsolation: true,
       nodeIntegrationInWorker: false,
       nodeIntegrationInSubFrames: false,
-      preload: `${__dirname}/preload.js`,
-    },
+      preload: `${__dirname}/preload.js`
+    }
   });
 
   win.webContents.openDevTools();
@@ -28,16 +28,13 @@ const createWindow = (): void => {
 
 app.on('ready', createWindow);
 
-ipcMain.handle(
-  'write-file',
-  async (event, args: { content: any; fileName: string }) => {
-    console.info('Attempting to write file..');
+ipcMain.handle('write-file', async (event, args: { content: any; fileName: string }) => {
+  console.info('Attempting to write file..');
 
-    await writeFile(args.fileName, args.content);
+  await writeFile(args.fileName, args.content);
 
-    console.info('Successfully wrote to file ' + args.fileName);
-  }
-);
+  console.info('Successfully wrote to file ' + args.fileName);
+});
 
 ipcMain.handle('read-file', async (event, fileName: string) => {
   console.info('Attempting to read file ' + fileName);
