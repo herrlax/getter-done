@@ -5,8 +5,8 @@ const isDev = process.argv[2] === '--dev';
 
 const createWindow = (): void => {
   const win = new BrowserWindow({
-    width: 1000,
-    height: 600,
+    width: 2000,
+    height: 680,
     webPreferences: {
       nodeIntegration: true,
       enableRemoteModule: false,

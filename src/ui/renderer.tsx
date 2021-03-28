@@ -1,13 +1,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './components/App';
+import TasksPage from './components/TasksPage';
 import Providers from './components/Providers';
+import { setup as setupGoober } from 'goober';
+
+setupGoober(React.createElement);
 
 ReactDOM.render(
   <React.StrictMode>
     <Providers>
-      <App />
+      <TasksPage />
     </Providers>
   </React.StrictMode>,
   document.getElementById('root')

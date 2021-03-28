@@ -10,35 +10,47 @@ module.exports = {
   devServer: {
     contentBase: path.join(__dirname, 'dist/renderer.js'),
     compress: true,
-    port: 9000,
+    port: 9000
   },
   resolve: {
     alias: {
-      '@': path.resolve(__dirname, 'src'),
+      '@': path.resolve(__dirname, 'src')
     },
-    extensions: ['.tsx', '.ts', '.js'],
+    extensions: ['.tsx', '.ts', '.js']
   },
   module: {
     rules: [
       {
         test: /\.ts(x?)$/,
         include: /src/,
-        use: [{ loader: 'ts-loader' }],
+        use: [{ loader: 'ts-loader' }]
       },
       {
         test: /\.css$/i,
-        use: ['style-loader', 'css-loader'],
+        use: ['style-loader', 'css-loader']
       },
-    ],
+      {
+        test: /\.(woff(2)?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,
+        use: [
+          {
+            loader: 'file-loader',
+            options: {
+              name: '[name].[ext]',
+              outputPath: 'fonts/'
+            }
+          }
+        ]
+      }
+    ]
   },
   output: {
     path: path.join(__dirname, '/dist'),
-    filename: 'renderer.js',
+    filename: 'renderer.js'
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: './src/index.html',
+      template: './src/index.html'
     }),
-    new webpack.ExternalsPlugin('commonjs', ['electron']),
-  ],
+    new webpack.ExternalsPlugin('commonjs', ['electron'])
+  ]
 };
