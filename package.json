@@ -9,7 +9,7 @@
     "start:ui:dev": "webpack serve --mode=development",
     "start:electron:dev": "nodemon --dev",
     "start:dev": "yarn build && concurrently --kill-others \"yarn start:ui:dev\" \"yarn start:electron:dev\"",
-    "start": "yarn run build && ELECTRON_DISABLE_SECURITY_WARNINGS=true electron dist/main.js"
+    "start": "yarn build && ELECTRON_DISABLE_SECURITY_WARNINGS=true electron dist/main.js"
   },
   "repository": "https://github.com/herrlax/getter-done",
   "author": "Mikael Malmqvist",
