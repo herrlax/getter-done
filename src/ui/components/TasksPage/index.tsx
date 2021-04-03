@@ -2,32 +2,10 @@ import { useTasksAction } from '@/ui/context/tasks';
 import React from 'react';
 import { styled } from 'goober';
 import TaskList from '../TaskList';
+import Button from '../Button';
 
 const Wrap = styled('div')`
   padding: 8px;
-`;
-
-const Button = styled('button')`
-  background: transparent;
-  border: 1px solid rgba(255, 255, 255, 0.25);
-  padding: 6px 10px;
-  color: #f5f6f7;
-  font-size: 14px;
-  font-family: Quicksand;
-  font-weight: 800;
-
-  &:focus,
-  &:hover {
-    cursor: pointer;
-    background-color: rgba(255, 255, 255, 0.2);
-    outline: none;
-  }
-
-  &:active {
-    outline: none;
-    border: 1px solid rgba(255, 255, 255, 0.8);
-    box-shadow: none;
-  }
 `;
 
 const TasksPage = () => {
@@ -44,7 +22,7 @@ const TasksPage = () => {
 
   return (
     <Wrap>
-      <Button type="button" onClick={onAddTask}>
+      <Button onClick={onAddTask} kind="secondary">
         Add task
       </Button>
       <TaskList />
