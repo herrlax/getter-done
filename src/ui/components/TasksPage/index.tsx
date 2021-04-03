@@ -1,8 +1,10 @@
-import { useTasksAction } from '@/ui/context/tasks';
+import { useTasksAction, useTasksState } from '@/ui/context/tasks';
 import React from 'react';
 import { styled } from 'goober';
 import TaskList from '../TaskList';
 import Button from '../Button';
+import Title from '../Title';
+import Subtitle from '../Subtitle';
 
 const Wrap = styled('div')`
   padding: 8px;
@@ -10,6 +12,7 @@ const Wrap = styled('div')`
 
 const TasksPage = () => {
   const { addTask } = useTasksAction();
+  const { data } = useTasksState();
 
   const onAddTask = async () => {
     addTask({
@@ -22,6 +25,14 @@ const TasksPage = () => {
 
   return (
     <Wrap>
+      <Title>Howdy 👋</Title>
+      <Subtitle>
+        {data.length === 0 ? (
+          <React.Fragment>All your tasks are done. Nice job 👍</React.Fragment>
+        ) : (
+          <React.Fragment>Get off your butt and getter done</React.Fragment>
+        )}
+      </Subtitle>
       <Button onClick={onAddTask} kind="secondary">
         Add task
       </Button>
