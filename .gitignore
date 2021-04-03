@@ -2,3 +2,5 @@ node_modules
 build
 .DS_Store
 dist
+yarn-error.log
+tasks.json

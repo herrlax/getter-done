@@ -46,7 +46,7 @@ const BaseButton = styled('button')([
     borderRadius: '2px',
     boxSizing: 'border-box',
     padding: '2px 12px',
-    color: '#f5f6f7',
+    color: Colors.offWhite,
     fontSize: '12px',
     fontFamily: 'Quicksand',
     fontWeight: 900,
