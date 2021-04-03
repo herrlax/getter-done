@@ -7,27 +7,17 @@ import Title from '../Title';
 import Subtitle from '../Subtitle';
 import TaskDialog from '../TaskDialog';
 
-const Wrap = styled('div')`
-  padding: 8px;
-`;
+const Wrap = styled('div')({
+  padding: '8px'
+});
 
 const TasksPage = () => {
   const [taskDialogIsOpen, setTaskDialogIsOpen] = useState(false);
   const { addTask } = useTasksAction();
   const { data } = useTasksState();
 
-  const onAddTask = async () => {
-    setTaskDialogIsOpen(true);
-    // addTask({
-    //   id: '893749',
-    //   title: 'Do the dishes',
-    //   date: new Date('2021-02-03'),
-    //   comments: []
-    // });
-  };
-
   return (
-    <>
+    <React.Fragment>
       <Wrap>
         <Title>Howdy 👋</Title>
         <Subtitle>
@@ -37,7 +27,7 @@ const TasksPage = () => {
             <React.Fragment>Get off your butt and getter done</React.Fragment>
           )}
         </Subtitle>
-        <Button onClick={onAddTask} kind="secondary">
+        <Button onClick={() => setTaskDialogIsOpen(true)} kind="secondary">
           Add task
         </Button>
         <TaskList />
@@ -45,8 +35,9 @@ const TasksPage = () => {
       <TaskDialog
         isOpen={taskDialogIsOpen}
         onDismiss={() => setTaskDialogIsOpen(false)}
+        onAddTask={(task: Task) => addTask(task)}
       />
-    </>
+    </React.Fragment>
   );
 };
 

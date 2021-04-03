@@ -1,17 +1,24 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { DialogContent, DialogOverlay } from '@reach/dialog';
 import '@reach/dialog/styles.css';
 import { styled } from 'goober';
 import Colors from '../Colors';
 import CloseIcon from '../../assets/icons/close.svg';
 import Button from '../Button';
+import Field from '../Field';
+import { Task } from '@/ui/context/tasks';
 
 type Props = {
   isOpen?: boolean;
   onDismiss: () => void;
+  onAddTask: (task: Task) => void;
 };
 
-const Wrap = styled('div')({ padding: '8px', backgroundColor: Colors.background });
+const Content = styled('div')({
+  display: 'flex',
+  flexDirection: 'column',
+  padding: '8px'
+});
 
 const DialogHeader = styled('div')({
   position: 'relative',
@@ -60,19 +67,28 @@ const ButtonWrap = styled('div')({
   justifyContent: 'flex-end'
 });
 
-const TaskDialog: React.FC<Props> = ({ isOpen, onDismiss }) => {
-  console.log('Hello from TaskDialog');
+const TaskDialog: React.FC<Props> = ({ isOpen, onDismiss, onAddTask }) => {
+  const [taskTitle, setTaskTitle] = useState<string>('');
 
-  if (!isOpen) {
-    return null;
-  }
+  const handleAddTask = () => {
+    onAddTask({
+      id: new Date().toISOString(),
+      date: new Date(),
+      title: taskTitle,
+      comments: []
+    });
+    setTaskTitle('');
+    onDismiss();
+  };
 
   return (
     <DialogOverlay
+      isOpen={isOpen}
       onDismiss={onDismiss}
       style={{ backgroundColor: 'rgba(0, 0, 0, 0.75)' }}
     >
       <DialogContent
+        aria-label="Add task"
         style={{
           backgroundColor: Colors.background,
           padding: 0,
@@ -85,9 +101,15 @@ const TaskDialog: React.FC<Props> = ({ isOpen, onDismiss }) => {
             <img src={CloseIcon} alt="Close dialog" width="12" height="12" />
           </CloseButton>
         </DialogHeader>
-        <Wrap>Hello from dialog</Wrap>
+        <Content>
+          <Field
+            placeholder="Need to get 'er done"
+            value={taskTitle}
+            onChange={setTaskTitle}
+          />
+        </Content>
         <ButtonWrap>
-          <Button onClick={() => {}}>Add task</Button>
+          <Button onClick={handleAddTask}>Add task</Button>
         </ButtonWrap>
       </DialogContent>
     </DialogOverlay>
