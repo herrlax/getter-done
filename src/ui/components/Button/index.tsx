@@ -1,6 +1,6 @@
 import { styled } from 'goober';
-import React, { MouseEventHandler } from 'react';
-import Colors from '../Colors';
+import React from 'react';
+import colors from '../Colors';
 
 type ButtonKind = 'primary' | 'secondary';
 
@@ -12,30 +12,30 @@ type Props = {
 const colorMap = {
   primary: {
     idle: {
-      background: Colors.primary
+      background: colors.primary
     },
     focus: {
-      background: Colors.primaryFocus
+      background: colors.primaryFocus
     },
     hover: {
-      background: Colors.primaryFocus
+      background: colors.primaryFocus
     },
     active: {
-      background: Colors.primaryActive
+      background: colors.primaryActive
     }
   },
   secondary: {
     idle: {
-      background: Colors.secondary
+      background: colors.secondary
     },
     focus: {
-      background: Colors.secondaryFocus
+      background: colors.secondaryFocus
     },
     hover: {
-      background: Colors.secondaryFocus
+      background: colors.secondaryFocus
     },
     active: {
-      background: Colors.secondaryActive
+      background: colors.secondaryActive
     }
   }
 };
@@ -46,7 +46,7 @@ const BaseButton = styled('button')([
     borderRadius: '2px',
     boxSizing: 'border-box',
     padding: '2px 12px',
-    color: Colors.offWhite,
+    color: colors.offWhite,
     fontSize: '12px',
     fontFamily: 'Quicksand',
     fontWeight: 900,
@@ -56,7 +56,7 @@ const BaseButton = styled('button')([
     backgroundColor: colorMap[kind].idle.background,
     '&:focus': {
       cursor: 'pointer',
-      border: `1px solid ${Colors.white}`,
+      border: `1px solid ${colors.white}`,
       backgroundColor: colorMap[kind].focus.background,
       outline: 'none'
     },
@@ -73,8 +73,6 @@ const BaseButton = styled('button')([
 ]) as any;
 
 const Button: React.FC<Props> = ({ kind = 'secondary', onClick, children }) => {
-  console.log('kind', kind);
-
   return (
     <BaseButton onClick={onClick} type="button" kind={kind}>
       {children}
