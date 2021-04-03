@@ -49,7 +49,8 @@ const BaseButton = styled('button')([
     color: '#f5f6f7',
     fontSize: '12px',
     fontFamily: 'Quicksand',
-    fontWeight: 900
+    fontWeight: 900,
+    transition: 'background-color 100ms ease-in'
   },
   (({ kind }: { kind: ButtonKind }) => ({
     backgroundColor: colorMap[kind].idle.background,
