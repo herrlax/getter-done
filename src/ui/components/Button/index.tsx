@@ -7,6 +7,7 @@ type ButtonKind = 'primary' | 'secondary';
 type Props = {
   kind?: ButtonKind;
   onClick: (e: any) => void;
+  disable?: boolean;
 };
 
 const colorMap = {
@@ -51,8 +52,10 @@ const BaseButton = styled('button')([
     fontFamily: 'Nunito Sans Bold',
     transition: 'background-color 100ms ease-in'
   },
-  (({ kind }: { kind: ButtonKind }) => ({
+  (({ kind, disable }: { kind: ButtonKind; disable?: boolean }) => ({
     backgroundColor: colorMap[kind].idle.background,
+    opacity: disable ? 0.3 : 1,
+    pointerEvents: disable ? 'none' : 'all',
     '&:focus': {
       cursor: 'pointer',
       border: `1px solid ${colors.white}`,
@@ -71,9 +74,9 @@ const BaseButton = styled('button')([
   })) as any
 ]) as any;
 
-const Button: React.FC<Props> = ({ kind = 'secondary', onClick, children }) => {
+const Button: React.FC<Props> = ({ kind = 'secondary', onClick, disable, children }) => {
   return (
-    <BaseButton onClick={onClick} type="button" kind={kind}>
+    <BaseButton onClick={onClick} type="button" kind={kind} disable={disable}>
       {children}
     </BaseButton>
   );

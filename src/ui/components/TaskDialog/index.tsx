@@ -109,7 +109,9 @@ const TaskDialog: React.FC<Props> = ({ isOpen, onDismiss, onAddTask }) => {
           />
         </Content>
         <ButtonWrap>
-          <Button onClick={handleAddTask}>Add task</Button>
+          <Button onClick={handleAddTask} disable={taskTitle === ''}>
+            Add task
+          </Button>
         </ButtonWrap>
       </DialogContent>
     </DialogOverlay>
