@@ -24,7 +24,7 @@ const TasksPage = () => {
           {data.length === 0 ? (
             <React.Fragment>All your tasks are done. Nice job 👍</React.Fragment>
           ) : (
-            <React.Fragment>Get off your butt and getter done</React.Fragment>
+            <React.Fragment>Get off your butt and get 'er done</React.Fragment>
           )}
         </Subtitle>
         <Button onClick={() => setTaskDialogIsOpen(true)} kind="secondary">

@@ -1,15 +1,36 @@
 @font-face {
-  font-family: Quicksand;
-  src: url(./fonts/Quicksand-VariableFont_wght.ttf);
+  font-family: Nunito Sans Light;
+  src: url(./fonts/nunito-sans/NunitoSans-Light.ttf);
 }
+
 @font-face {
-  font-family: Work Sans;
-  src: url(./fonts/WorkSans-VariableFont_wght.ttf);
+  font-family: Nunito Sans Extra Light;
+  src: url(./fonts/nunito-sans/NunitoSans-ExtraLight.ttf);
+}
+
+@font-face {
+  font-family: Nunito Sans Regular;
+  src: url(./fonts/nunito-sans/NunitoSans-Regular.ttf);
+}
+
+@font-face {
+  font-family: Nunito Sans Semi Bold;
+  src: url(./fonts/nunito-sans/NunitoSans-SemiBold.ttf);
+}
+
+@font-face {
+  font-family: Nunito Sans Bold;
+  src: url(./fonts/nunito-sans/NunitoSans-Bold.ttf);
+}
+
+@font-face {
+  font-family: Nunito Sans Extra Bold;
+  src: url(./fonts/nunito-sans/NunitoSans-ExtraBold.ttf);
 }
 
 body {
   margin: 0;
-  font-family: 'Work Sans', 'Quicksand', Verdana;
+  font-family: 'Nunito Sans Regular', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-color: #36393f;

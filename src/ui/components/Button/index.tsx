@@ -48,8 +48,7 @@ const BaseButton = styled('button')([
     padding: '2px 12px',
     color: colors.offWhite,
     fontSize: '12px',
-    fontFamily: 'Quicksand',
-    fontWeight: 900,
+    fontFamily: 'Nunito Sans Bold',
     transition: 'background-color 100ms ease-in'
   },
   (({ kind }: { kind: ButtonKind }) => ({
