@@ -1,41 +1,42 @@
 import { styled } from 'goober';
-import React, { MouseEventHandler } from 'react';
-import Colors from '../Colors';
+import React from 'react';
+import colors from '../Colors';
 
 type ButtonKind = 'primary' | 'secondary';
 
 type Props = {
   kind?: ButtonKind;
   onClick: (e: any) => void;
+  disable?: boolean;
 };
 
 const colorMap = {
   primary: {
     idle: {
-      background: Colors.primary
+      background: colors.primary
     },
     focus: {
-      background: Colors.primaryFocus
+      background: colors.primaryFocus
     },
     hover: {
-      background: Colors.primaryFocus
+      background: colors.primaryFocus
     },
     active: {
-      background: Colors.primaryActive
+      background: colors.primaryActive
     }
   },
   secondary: {
     idle: {
-      background: Colors.secondary
+      background: colors.secondary
     },
     focus: {
-      background: Colors.secondaryFocus
+      background: colors.secondaryFocus
     },
     hover: {
-      background: Colors.secondaryFocus
+      background: colors.secondaryFocus
     },
     active: {
-      background: Colors.secondaryActive
+      background: colors.secondaryActive
     }
   }
 };
@@ -46,17 +47,18 @@ const BaseButton = styled('button')([
     borderRadius: '2px',
     boxSizing: 'border-box',
     padding: '2px 12px',
-    color: '#f5f6f7',
+    color: colors.offWhite,
     fontSize: '12px',
-    fontFamily: 'Quicksand',
-    fontWeight: 900,
+    fontFamily: 'Nunito Sans Bold',
     transition: 'background-color 100ms ease-in'
   },
-  (({ kind }: { kind: ButtonKind }) => ({
+  (({ kind, disable }: { kind: ButtonKind; disable?: boolean }) => ({
     backgroundColor: colorMap[kind].idle.background,
+    opacity: disable ? 0.3 : 1,
+    pointerEvents: disable ? 'none' : 'all',
     '&:focus': {
       cursor: 'pointer',
-      border: `1px solid ${Colors.white}`,
+      border: `1px solid ${colors.white}`,
       backgroundColor: colorMap[kind].focus.background,
       outline: 'none'
     },
@@ -72,11 +74,9 @@ const BaseButton = styled('button')([
   })) as any
 ]) as any;
 
-const Button: React.FC<Props> = ({ kind = 'secondary', onClick, children }) => {
-  console.log('kind', kind);
-
+const Button: React.FC<Props> = ({ kind = 'secondary', onClick, disable, children }) => {
   return (
-    <BaseButton onClick={onClick} type="button" kind={kind}>
+    <BaseButton onClick={onClick} type="button" kind={kind} disable={disable}>
       {children}
     </BaseButton>
   );

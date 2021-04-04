@@ -1,5 +1,7 @@
-const Colors = {
+const colors = {
   background: '#36393F',
+  darkGrey: '#101419',
+  darkerGrey: '#071116',
   offWhite: '#f5f6f7',
   white: '#ffffff',
   red: '#DE4C4A',
@@ -11,4 +13,4 @@ const Colors = {
   secondaryActive: '#60646C'
 };
 
-export default Colors;
+export default colors;
