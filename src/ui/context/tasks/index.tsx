@@ -6,6 +6,7 @@ export type Task = {
   date: Date;
   title: string;
   comments: string[];
+  done: boolean;
 };
 
 type State = {

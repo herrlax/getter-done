@@ -75,7 +75,8 @@ const TaskDialog: React.FC<Props> = ({ isOpen, onDismiss, onAddTask }) => {
       id: new Date().toISOString(),
       date: new Date(),
       title: taskTitle,
-      comments: []
+      comments: [],
+      done: false
     });
     setTaskTitle('');
     onDismiss();
