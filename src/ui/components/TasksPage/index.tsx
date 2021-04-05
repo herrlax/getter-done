@@ -6,9 +6,13 @@ import Button from '../Button';
 import Title from '../Title';
 import Subtitle from '../Subtitle';
 import TaskDialog from '../TaskDialog';
+import Bouble from '../Bouble';
 
 const Wrap = styled('div')({
-  padding: '8px'
+  padding: '8px',
+  display: 'flex',
+  flexDirection: 'column',
+  height: '98vh'
 });
 
 const TasksPage = () => {
@@ -31,6 +35,7 @@ const TasksPage = () => {
           Add task
         </Button>
         <TaskList />
+        <Bouble />
       </Wrap>
       <TaskDialog
         isOpen={taskDialogIsOpen}

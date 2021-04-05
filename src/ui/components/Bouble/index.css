@@ -1,0 +1,24 @@
+@keyframes moveUp {
+  0% {
+    opacity: 1;
+    top: 100vh;
+    left: 0;
+  }
+
+  25% {
+    left: 25px;
+  }
+
+  50% {
+    left: 0;
+  }
+
+  75% {
+    left: 25px;
+  }
+
+  100% {
+    top: -150px;
+    left: 0;
+  }
+}

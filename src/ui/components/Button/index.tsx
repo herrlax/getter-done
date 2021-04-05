@@ -43,6 +43,7 @@ const colorMap = {
 
 const BaseButton = styled('button')([
   {
+    width: 'fit-content',
     border: '1px solid transparent',
     borderRadius: '2px',
     boxSizing: 'border-box',
