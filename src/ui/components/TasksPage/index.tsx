@@ -36,6 +36,11 @@ const TasksPage = () => {
         </Button>
         <TaskList />
         <Bouble />
+        <Bouble />
+        <Bouble />
+        <Bouble />
+        <Bouble />
+        <Bouble />
       </Wrap>
       <TaskDialog
         isOpen={taskDialogIsOpen}
