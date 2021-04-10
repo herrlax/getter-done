@@ -14,8 +14,10 @@ const TaskList: React.FC = () => {
 
   return (
     <List>
-      {data.map((task) => (
-        <TaskItem task={task} onChange={handleChange} />
+      {data.map((task: Task) => (
+        <li key={task.id}>
+          <TaskItem task={task} onChange={handleChange} />
+        </li>
       ))}
     </List>
   );

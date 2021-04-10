@@ -23,12 +23,10 @@ const TaskItem: React.FC<Props> = ({ task, onChange }) => {
   }, [checked]);
 
   return (
-    <li key={task.id}>
-      <Label>
-        <Checkbox checked={checked} onChange={setChecked} />
-        {task.title}
-      </Label>
-    </li>
+    <Label>
+      <Checkbox checked={checked} onChange={setChecked} />
+      {task.title}
+    </Label>
   );
 };
 
