@@ -1,7 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { CustomCheckbox } from '@reach/checkbox';
 import './index.css';
-import { styled } from 'goober';
 
 type Props = {
   checked: boolean;

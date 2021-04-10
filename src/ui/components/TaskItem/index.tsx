@@ -11,9 +11,7 @@ type Props = {
 const Label = styled('label')({
   display: 'flex',
   alignItems: 'center',
-  '& input': {
-    marginTop: '6px'
-  }
+  margin: '4px 0'
 });
 
 const TaskItem: React.FC<Props> = ({ task, onChange }) => {

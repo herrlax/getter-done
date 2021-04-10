@@ -1,5 +1,6 @@
 [data-reach-custom-checkbox] {
   position: relative;
+  margin-right: 8px;
 }
 
 [data-reach-custom-checkbox-input] {
@@ -9,7 +10,7 @@
 [data-reach-custom-checkbox] span {
   position: absolute;
   left: 0;
-  top: 5px;
+  top: 0;
   border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 50%;
   background-color: #50545c;
@@ -17,6 +18,11 @@
   height: 14px;
   width: 14px;
   transition: background-color 100ms ease-in;
+}
+
+[data-reach-custom-checkbox][data-focused] {
+  outline: none;
+  box-shadow: none;
 }
 
 [data-reach-custom-checkbox][data-focused] span {
