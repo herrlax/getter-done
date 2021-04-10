@@ -9,6 +9,6 @@ type Task = {
 declare interface Window {
   electron: {
     writeTasks(tasks: Task[]): Promise<void>;
-    getTasks(): Promise<Task[]>;
+    getTasks(): Promise<{ [id: string]: Task }>;
   };
 }

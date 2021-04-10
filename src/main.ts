@@ -55,6 +55,6 @@ ipcMain.handle('read-file', async (event, fileName: string) => {
 });
 
 const writeFile = async (fileName: string, content: any) =>
-  fs.writeFile(fileName, JSON.stringify({ entries: content }), 'utf8');
+  fs.writeFile(fileName, JSON.stringify(content), 'utf8');
 
 const readFile = async (fileName: string) => fs.readFile(fileName, 'utf8');
