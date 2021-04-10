@@ -52,10 +52,10 @@ const BaseButton = styled('button')([
     fontFamily: 'Nunito Sans Bold',
     transition: 'background-color 100ms ease-in'
   },
-  (({ kind, disable }: { kind: ButtonKind; disable?: boolean }) => ({
+  (({ kind, disabled }: { kind: ButtonKind; disabled?: boolean }) => ({
     backgroundColor: colorMap[kind].idle.background,
-    opacity: disable ? 0.3 : 1,
-    pointerEvents: disable ? 'none' : 'all',
+    opacity: disabled ? 0.3 : 1,
+    pointerEvents: disabled ? 'none' : 'all',
     '&:focus': {
       cursor: 'pointer',
       border: `1px solid ${colors.white}`,
@@ -76,7 +76,7 @@ const BaseButton = styled('button')([
 
 const Button: React.FC<Props> = ({ kind = 'secondary', onClick, disable, children }) => {
   return (
-    <BaseButton onClick={onClick} type="button" kind={kind} disable={disable}>
+    <BaseButton onClick={onClick} type="button" kind={kind} disabled={disable}>
       {children}
     </BaseButton>
   );
