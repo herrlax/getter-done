@@ -6,7 +6,7 @@
   "private": true,
   "scripts": {
     "build": "webpack",
-    "test": "jest --setupFiles ./src/setupTests.ts --roots ./src",
+    "test": "jest --setupFilesAfterEnv ./src/setupTests.js",
     "start:ui:dev": "webpack serve --mode=development",
     "start:electron:dev": "nodemon --dev",
     "start:dev": "yarn build && concurrently --kill-others \"yarn start:ui:dev\" \"yarn start:electron:dev\"",
