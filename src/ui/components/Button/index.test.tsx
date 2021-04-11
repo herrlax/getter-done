@@ -15,4 +15,14 @@ describe('<Button />', function () {
 
     await waitFor(() => expect(spy).toHaveBeenCalledTimes(1));
   });
+
+  it('sets disabled correctly', async () => {
+    const { getByText } = render(
+      <Button onClick={() => {}} disable>
+        Click me
+      </Button>
+    );
+
+    await waitFor(() => expect(getByText('Click me')).toHaveAttribute('disabled'));
+  });
 });
