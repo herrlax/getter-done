@@ -26,7 +26,7 @@ const TaskItem: React.FC<Props> = ({ task, onChange }) => {
 
   return (
     <Label>
-      <Checkbox checked={checked} onChange={handleChange} />
+      <Checkbox checked={checked} onChange={handleChange} name={`${task.title} check`} />
       {task.title}
     </Label>
   );
