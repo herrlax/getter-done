@@ -3,7 +3,7 @@ import { fireEvent, render, waitFor } from '@testing-library/react';
 import Checkbox from '.';
 
 describe('<Checkbox />', function () {
-  it('renders without crashing', () => {
+  it('renders Checkbox', () => {
     render(<Checkbox onChange={() => {}} checked name="" />);
   });
 

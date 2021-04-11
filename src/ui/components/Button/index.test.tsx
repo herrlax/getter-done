@@ -3,7 +3,7 @@ import { fireEvent, render, waitFor } from '@testing-library/react';
 import Button from '.';
 
 describe('<Button />', function () {
-  it('renders without crashing', () => {
+  it('renders Button', () => {
     render(<Button onClick={() => {}} />);
   });
 

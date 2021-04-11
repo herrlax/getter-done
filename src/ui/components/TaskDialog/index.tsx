@@ -89,7 +89,7 @@ const TaskDialog: React.FC<Props> = ({ isOpen, onDismiss, onAddTask }) => {
       style={{ backgroundColor: 'rgba(0, 0, 0, 0.75)' }}
     >
       <DialogContent
-        aria-label="Add task"
+        aria-label="Add task dialog"
         style={{
           backgroundColor: Colors.background,
           padding: 0,
@@ -97,14 +97,14 @@ const TaskDialog: React.FC<Props> = ({ isOpen, onDismiss, onAddTask }) => {
         }}
       >
         <DialogHeader>
-          <HeaderTitle>Add task</HeaderTitle>
-          <CloseButton type="button" onClick={onDismiss}>
-            <img src={CloseIcon} alt="Close dialog" width="12" height="12" />
+          <HeaderTitle>Add new task</HeaderTitle>
+          <CloseButton type="button" onClick={onDismiss} aria-label="Close dialog">
+            <img src={CloseIcon} alt="" width="12" height="12" />
           </CloseButton>
         </DialogHeader>
         <Content>
           <Field
-            placeholder="Need to get 'er done"
+            placeholder="Need to get ’er done"
             value={taskTitle}
             onChange={setTaskTitle}
           />

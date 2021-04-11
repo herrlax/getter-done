@@ -4,6 +4,10 @@
   "main": "dist/main.js",
   "description": "Todo app for desktop to getter done, built with electron",
   "private": true,
+  "moduleDirectories": [
+    "node_modules",
+    "src"
+  ],
   "scripts": {
     "build": "webpack",
     "test": "jest --setupFilesAfterEnv ./src/setupTests.js",
@@ -15,8 +19,12 @@
   "jest": {
     "moduleNameMapper": {
       "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/__mocks__/fileMock.js",
-      "\\.(css|less)$": "<rootDir>/__mocks__/styleMock.js"
-    }
+      "\\.(css|less)$": "<rootDir>/__mocks__/styleMock.js",
+      "^@/ui/(.*)": "<rootDir>/src/ui/$1"
+    },
+    "modulePaths": [
+      "<rootDir>"
+    ]
   },
   "repository": "https://github.com/herrlax/getter-done",
   "author": "Mikael Malmqvist",
