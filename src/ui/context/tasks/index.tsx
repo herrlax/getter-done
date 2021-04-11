@@ -6,12 +6,18 @@ export type Task = {
   date: Date;
   title: string;
   comments: string[];
+  done: boolean;
 };
 
 type State = {
   data: Task[];
   addTask: {
     pendingTask?: Task;
+    isLoading: boolean;
+    isError: boolean;
+  };
+  editTask: {
+    task?: Task;
     isLoading: boolean;
     isError: boolean;
   };
@@ -23,6 +29,7 @@ type State = {
 
 type Action = {
   addTask: (task: Task) => void;
+  editTask: (task: Task) => void;
   syncTasks: () => void;
 };
 
@@ -30,6 +37,9 @@ type ReducerAction =
   | { type: 'add_task_init'; data: Task }
   | { type: 'add_task_success' }
   | { type: 'add_task_errored' }
+  | { type: 'edit_task_init'; data: Task }
+  | { type: 'edit_task_success' }
+  | { type: 'edit_task_errored' }
   | { type: 'sync_tasks_init' }
   | { type: 'sync_tasks_success'; data: Task[] }
   | { type: 'sync_tasks_errored' };
@@ -55,6 +65,23 @@ const curriedReducer: (state: State, action: ReducerAction) => State = produce(
       case 'add_task_errored':
         draft.addTask.isLoading = false;
         draft.addTask.isError = true;
+        return;
+
+      case 'edit_task_init':
+        draft.editTask.isLoading = true;
+        draft.editTask.isError = false;
+        draft.editTask.task = action.data;
+        return;
+
+      case 'edit_task_success':
+        draft.editTask.isLoading = false;
+        draft.editTask.isError = false;
+        draft.editTask.task = undefined;
+        return;
+
+      case 'edit_task_errored':
+        draft.editTask.isLoading = false;
+        draft.editTask.isError = true;
         return;
 
       case 'sync_tasks_init':
@@ -83,10 +110,15 @@ type ProviderProps = {
   data: Task[];
 };
 
-const initialState = {
+const initialState: State = {
   data: [],
   addTask: {
     pendingTask: undefined,
+    isLoading: false,
+    isError: false
+  },
+  editTask: {
+    task: undefined,
     isLoading: false,
     isError: false
   },
@@ -112,6 +144,12 @@ const TasksProvider: React.FC<ProviderProps> = ({ data, children }) => {
   }, [state.addTask.isError]);
 
   useEffect(() => {
+    if (state.editTask.isError) {
+      console.error('Failed to edit task');
+    }
+  }, [state.addTask.isError]);
+
+  useEffect(() => {
     if (state.syncTasks.isError) {
       console.error('Failed to sync tasks');
     }
@@ -125,7 +163,7 @@ const TasksProvider: React.FC<ProviderProps> = ({ data, children }) => {
         const res = await window.electron.getTasks();
 
         if (isCurrent) {
-          dispatch({ type: 'sync_tasks_success', data: res });
+          dispatch({ type: 'sync_tasks_success', data: Object.values(res) });
         }
       } catch (e) {
         if (isCurrent) {
@@ -168,10 +206,42 @@ const TasksProvider: React.FC<ProviderProps> = ({ data, children }) => {
     };
   }, [state.addTask.isLoading, state.addTask.pendingTask]);
 
+  useEffect(() => {
+    let isCurrent = true;
+
+    const update = async () => {
+      if (typeof state.editTask.task !== 'undefined') {
+        try {
+          await window.electron.writeTasks([...state.data, state.editTask.task]);
+
+          if (isCurrent) {
+            dispatch({ type: 'edit_task_success' });
+            dispatch({ type: 'sync_tasks_init' });
+          }
+        } catch (e) {
+          if (isCurrent) {
+            dispatch({ type: 'edit_task_errored' });
+          }
+        }
+      }
+    };
+
+    if (state.editTask.isLoading && typeof state.editTask.task !== 'undefined') {
+      update();
+    }
+
+    return () => {
+      isCurrent = false;
+    };
+  }, [state.editTask.isLoading, state.editTask.task]);
+
   const actions = useMemo(
     () => ({
       addTask: (task: Task) => {
         dispatch({ type: 'add_task_init', data: task });
+      },
+      editTask: (task: Task) => {
+        dispatch({ type: 'edit_task_init', data: task });
       },
       syncTasks: () => {
         dispatch({ type: 'sync_tasks_init' });

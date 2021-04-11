@@ -1,17 +1,26 @@
-import { useTasksState } from '@/ui/context/tasks';
+import { useTasksAction, useTasksState } from '@/ui/context/tasks';
+import { styled } from 'goober';
 import React from 'react';
+import TaskItem from '../TaskItem';
+
+const List = styled('ul')({ listStyle: 'none', margin: 0, padding: 0 });
 
 const TaskList: React.FC = () => {
   const { data } = useTasksState();
+  const { editTask } = useTasksAction();
+
+  const handleChange = (task: Task) => {
+    editTask(task);
+  };
 
   return (
-    <ul>
-      {data.map((task) => (
+    <List>
+      {data.map((task: Task) => (
         <li key={task.id}>
-          <h3>{task.title}</h3>
+          <TaskItem task={task} onChange={handleChange} />
         </li>
       ))}
-    </ul>
+    </List>
   );
 };
 

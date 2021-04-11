@@ -1,0 +1,64 @@
+[data-reach-custom-checkbox] {
+  position: relative;
+  margin-right: 8px;
+}
+
+[data-reach-custom-checkbox-input] {
+  opacity: 0;
+}
+
+[data-reach-custom-checkbox] span {
+  position: absolute;
+  left: 0;
+  top: 0;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  background-color: #50545c;
+  cursor: pointer;
+  height: 14px;
+  width: 14px;
+  transition: background-color 100ms ease-in;
+}
+
+[data-reach-custom-checkbox][data-focused] {
+  outline: none;
+  box-shadow: none;
+}
+
+[data-reach-custom-checkbox][data-focused] span {
+  background-color: #70747c;
+  border: 1px solid #fff;
+}
+
+[data-reach-custom-checkbox][data-focused][data-state='checked'] span {
+  background-color: #33a571;
+  border: 1px solid #fff;
+}
+
+[data-reach-custom-checkbox][data-state='unchecked'] span:hover {
+  background-color: #70747c;
+}
+
+[data-reach-custom-checkbox][data-state='checked'] span {
+  background-color: #239561;
+  border-color: #239561;
+}
+
+[data-reach-custom-checkbox] span:after {
+  position: absolute;
+  left: 3.5px;
+  top: 4px;
+  border: 2px solid #fff;
+  border-top: none;
+  border-right: none;
+  content: '';
+  opacity: 0;
+  height: 2px;
+  width: 5px;
+  transform: rotate(-45deg);
+  transition: opacity 100ms ease-in;
+}
+
+[data-reach-custom-checkbox][data-state='checked'] span:after {
+  opacity: 1;
+}

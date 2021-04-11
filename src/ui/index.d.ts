@@ -3,11 +3,12 @@ type Task = {
   date: Date;
   title: string;
   comments: string[];
+  done: boolean;
 };
 
 declare interface Window {
   electron: {
     writeTasks(tasks: Task[]): Promise<void>;
-    getTasks(): Promise<Task[]>;
+    getTasks(): Promise<{ [id: string]: Task }>;
   };
 }
