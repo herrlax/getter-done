@@ -15,7 +15,8 @@ const Wrap = styled('div')({
 const ProgressWrap = styled('div')([
   {
     display: 'flex',
-    alignItems: 'center'
+    alignItems: 'center',
+    marginBottom: '4px'
   }
 ]);
 

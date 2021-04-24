@@ -8,15 +8,18 @@ const Wrap = styled('div')([
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    margin: '6px',
     width: '32px',
     height: '32px'
   },
   (({ progress, total }: { progress: number; total: number }) => ({
     '@keyframes dash': {
       '0%': {
+        opacity: 0,
         strokeDasharray: '0, 100',
         strokeDashoffset: '0'
+      },
+      '10%': {
+        opacity: 1
       },
       '100%': {
         strokeDasharray: `${(progress / total) * 100}, 100`,
@@ -26,10 +29,10 @@ const Wrap = styled('div')([
   })) as any
 ]) as any;
 
-const SVG = styled('svg')({
+const CirlceSVG = styled('svg')({
   width: '32px',
   height: '32px',
-  transform: 'rotate(-94deg)'
+  transform: 'rotate(-95deg)'
 });
 
 const Circle = styled('circle')({
@@ -38,38 +41,17 @@ const Circle = styled('circle')({
   animation: '1500ms dash 500ms ease-in-out both'
 });
 
-const Check = styled('span')({
+const CheckSVG = styled('svg')({
   position: 'absolute',
-  left: '12px',
-  top: '14px',
-  height: '2px',
-  width: '5px',
-  transform: 'rotate(-45deg)',
-  '&:after': {
-    position: 'absolute',
-    content: "''",
-    animation: '50ms fadeIn 2000ms cubic-bezier(.17,.67,.83,.67) both'
-  },
-  '@keyframes fadeIn': {
-    '0%': {
-      borderBottom: 'none',
-      borderLeft: '2px solid #fff',
-      height: 0,
-      width: 0
-    },
-    '50%': {
-      borderBottom: '2px solid #fff',
-      borderLeft: '2px solid #fff',
-      height: '2px',
-      width: 0
-    },
-    '100%': {
-      borderBottom: '2px solid #fff',
-      borderLeft: '2px solid #fff',
-      height: '2px',
-      width: '5px'
-    }
-  }
+  top: '12px',
+  left: '8px'
+});
+
+const Polyline = styled('polyline')({
+  stroke: '#fff',
+  strokeLinecap: 'square',
+  animation: '1200ms dash 1800ms ease both',
+  transform: 'rotate(-45deg)'
 });
 
 type Props = {
@@ -84,16 +66,25 @@ const Progress: React.FC<Props> = ({ progress, total }) => {
 
   return (
     <Wrap progress={progress} total={total}>
-      <SVG viewBox="-5 -25 10 50">
+      <CirlceSVG viewBox="-5 -25 10 50" xmlns="http://www.w3.org/2000/svg">
         <Circle
           cx="0" // start x
           cy="0" // start y
           r="15" // radius
           fill="none"
           strokeWidth="3"
-        ></Circle>
-      </SVG>
-      {progress === total && <Check />}
+        />
+      </CirlceSVG>
+      <CheckSVG
+        width="16px"
+        height="8px"
+        viewBox="0 -8 14 12"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        {progress === total && (
+          <Polyline points="1 0 1 5 13 5" strokeWidth="2" fill="none" />
+        )}
+      </CheckSVG>
     </Wrap>
   );
 };
