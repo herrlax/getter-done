@@ -3,7 +3,7 @@ import { CustomCheckbox } from '@reach/checkbox';
 import './index.css';
 
 type Props = {
-  checked: boolean;
+  checked?: boolean;
   onChange: (checked: boolean) => void;
   name: string;
 };

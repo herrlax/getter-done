@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Task } from '../../context/tasks';
 import { styled } from 'goober';
 import Checkbox from '../Checkbox';
