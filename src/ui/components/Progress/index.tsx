@@ -25,11 +25,20 @@ const Wrap = styled('div')([
         strokeDasharray: `${(progress / total) * 100}, 100`,
         strokeDashoffset: '0'
       }
+    },
+    '@keyframes fadeIn': {
+      '0%': {
+        opacity: 0
+      },
+      '100%': {
+        opacity: 1
+      }
     }
   })) as any
 ]) as any;
 
 const CirlceSVG = styled('svg')({
+  position: 'absolute',
   width: '32px',
   height: '32px',
   transform: 'rotate(-95deg)'
@@ -50,8 +59,14 @@ const CheckSVG = styled('svg')({
 const Polyline = styled('polyline')({
   stroke: '#fff',
   strokeLinecap: 'square',
-  animation: '1200ms dash 1800ms ease both',
+  animation: '1200ms dash 1500ms ease both',
   transform: 'rotate(-45deg)'
+});
+
+const Percentage = styled('span')({
+  fontSize: '7px',
+  fontWeight: 'bold',
+  animation: '1000ms fadeIn 1500ms ease both'
 });
 
 type Props = {
@@ -75,16 +90,19 @@ const Progress: React.FC<Props> = ({ progress, total }) => {
           strokeWidth="3"
         />
       </CirlceSVG>
-      <CheckSVG
-        width="16px"
-        height="8px"
-        viewBox="0 -8 14 12"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        {progress === total && (
+      {progress === total && (
+        <CheckSVG
+          width="16px"
+          height="8px"
+          viewBox="0 -8 14 12"
+          xmlns="http://www.w3.org/2000/svg"
+        >
           <Polyline points="1 0 1 5 13 5" strokeWidth="2" fill="none" />
-        )}
-      </CheckSVG>
+        </CheckSVG>
+      )}
+      {progress !== total && (
+        <Percentage>{Math.round((progress / total) * 100)}</Percentage>
+      )}
     </Wrap>
   );
 };
