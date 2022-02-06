@@ -1,4 +1,4 @@
-import { styled } from 'goober';
+import { styled, css } from 'goober';
 import React from 'react';
 import colors from '../Colors';
 
@@ -11,7 +11,7 @@ const Wrap = styled('div')([
     width: '32px',
     height: '32px'
   },
-  (({ progress, total }: { progress: number; total: number }) => ({
+  (({ progress }: { progress: number }) => ({
     '@keyframes dash': {
       '0%': {
         opacity: 0,
@@ -22,7 +22,7 @@ const Wrap = styled('div')([
         opacity: 1
       },
       '100%': {
-        strokeDasharray: `${(progress / total) * 100}, 100`,
+        strokeDasharray: `${progress * 100}, 100`,
         strokeDashoffset: '0'
       }
     },
@@ -71,16 +71,11 @@ const Percentage = styled('span')({
 
 type Props = {
   progress: number;
-  total: number;
 };
 
-const Progress: React.FC<Props> = ({ progress, total }) => {
-  if (total === 0) {
-    return null;
-  }
-
+const Progress: React.FC<Props> = ({ progress }) => {
   return (
-    <Wrap progress={progress} total={total}>
+    <Wrap progress={progress}>
       <CirlceSVG viewBox="-5 -25 10 50" xmlns="http://www.w3.org/2000/svg">
         <Circle
           cx="0" // start x
@@ -90,7 +85,7 @@ const Progress: React.FC<Props> = ({ progress, total }) => {
           strokeWidth="3"
         />
       </CirlceSVG>
-      {progress === total && (
+      {progress === 1 && (
         <CheckSVG
           width="16px"
           height="8px"
@@ -100,9 +95,7 @@ const Progress: React.FC<Props> = ({ progress, total }) => {
           <Polyline points="1 0 1 5 13 5" strokeWidth="2" fill="none" />
         </CheckSVG>
       )}
-      {progress !== total && (
-        <Percentage>{Math.round((progress / total) * 100)}</Percentage>
-      )}
+      {progress !== 1 && <Percentage>{Math.round(progress * 100)}</Percentage>}
     </Wrap>
   );
 };

@@ -25,26 +25,25 @@ const TasksPage = () => {
   const { addTask } = useTasksAction();
   const { data } = useTasksState();
 
-  const noCompleted = useMemo(() => {
-    const completedTasks = data.filter((t) => t.done);
-    return completedTasks.length;
-  }, []);
+  const noCompleted = useMemo(() => data.filter((t) => t.done).length, [data]);
 
   return (
     <React.Fragment>
       <Wrap>
         <Title>Howdy 👋</Title>
         <div>
-          <ProgressWrap>
-            <Progress progress={noCompleted} total={data.length} />
-            {noCompleted === data.length ? (
-              <React.Fragment>All your tasks are done. Nice job 👍</React.Fragment>
-            ) : (
-              <span>
-                {noCompleted} of {data.length} tasks are done. Keep it up!
-              </span>
-            )}
-          </ProgressWrap>
+          {data.length > 0 && (
+            <ProgressWrap>
+              <Progress progress={noCompleted / data.length} />
+              {noCompleted === data.length ? (
+                <React.Fragment>All your tasks are done. Nice job 👍</React.Fragment>
+              ) : (
+                <span>
+                  {noCompleted} of {data.length} tasks are done. Keep it up!
+                </span>
+              )}
+            </ProgressWrap>
+          )}
         </div>
         <Button onClick={() => setTaskDialogIsOpen(true)} kind="secondary">
           Add task
