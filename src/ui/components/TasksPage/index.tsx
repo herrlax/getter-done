@@ -1,54 +1,36 @@
 import { useTasksAction, useTasksState } from '@/ui/context/tasks';
-import { styled } from 'goober';
 import React, { useEffect, useMemo, useState } from 'react';
 import Button from '../Button';
 import Progress from '../Progress';
 import TaskDialog from '../TaskDialog';
 import TaskList from '../TaskList';
-import Title from '../Title';
-
-const Wrap = styled('div')({
-  padding: '8px'
-});
-
-const ProgressWrap = styled('div')({
-  display: 'flex',
-  alignItems: 'center',
-  marginBottom: '4px',
-  animation: '1000ms fadeOut 3500ms ease both',
-  position: 'absolute'
-});
-
-const ProgressText = styled('span')({
-  animation: '1000ms fadeIn 0ms ease both'
-});
-
-const TasksWrap = styled('div')({
-  animation: '1000ms fadeIn 0ms ease both'
-});
+import { PROGRESS_TEXT, PROGRESS_WRAP, TASK_WRAP, WRAP } from './styles';
 
 const TasksPage = () => {
   const [showProgress, setShowProgress] = useState(true);
   const [taskDialogIsOpen, setTaskDialogIsOpen] = useState(false);
   const { addTask } = useTasksAction();
-  const { data } = useTasksState();
+  const {
+    data,
+    addTask: { isLoading: addTaskIsLoading }
+  } = useTasksState();
 
   useEffect(() => {
     setTimeout(() => {
       setShowProgress(false);
-    }, 4500);
+    }, 5000);
   }, []);
 
   const noCompleted = useMemo(() => data.filter((t) => t.done).length, [data]);
 
   return (
     <React.Fragment>
-      <Wrap>
-        <Title>Howdy 👋</Title>
+      <div css={WRAP}>
+        <h1>Howdy 👋</h1>
         {data.length > 0 && showProgress && (
-          <ProgressWrap>
+          <div css={PROGRESS_WRAP}>
             <Progress progress={noCompleted / data.length} />
-            <ProgressText>
+            <span css={PROGRESS_TEXT}>
               {noCompleted === data.length ? (
                 <React.Fragment>All your tasks are done. Nice job 👍</React.Fragment>
               ) : (
@@ -56,18 +38,22 @@ const TasksPage = () => {
                   {noCompleted} of {data.length} tasks are done. Keep it up!
                 </span>
               )}
-            </ProgressText>
-          </ProgressWrap>
+            </span>
+          </div>
         )}
         {!showProgress && (
-          <TasksWrap>
-            <Button onClick={() => setTaskDialogIsOpen(true)} kind="secondary">
+          <div css={TASK_WRAP}>
+            <Button
+              onClick={() => setTaskDialogIsOpen(true)}
+              variant="secondary"
+              disabled={addTaskIsLoading}
+            >
               Add task
             </Button>
             <TaskList />
-          </TasksWrap>
+          </div>
         )}
-      </Wrap>
+      </div>
       <TaskDialog
         isOpen={taskDialogIsOpen}
         onDismiss={() => setTaskDialogIsOpen(false)}
