@@ -18,7 +18,7 @@ describe('<Button />', function () {
 
   it('sets disabled correctly', async () => {
     const { getByText } = render(
-      <Button onClick={() => {}} disable>
+      <Button onClick={() => {}} disabled>
         Click me
       </Button>
     );

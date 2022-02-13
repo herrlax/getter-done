@@ -1,71 +1,18 @@
-import React, { useState } from 'react';
+import { Task } from '@/ui/context/tasks';
 import { DialogContent, DialogOverlay } from '@reach/dialog';
 import '@reach/dialog/styles.css';
-import { styled } from 'goober';
-import Colors from '../Colors';
+import React, { useState } from 'react';
 import CloseIcon from '../../assets/icons/close.svg';
 import Button from '../Button';
+import { default as colors, default as Colors } from '../Colors';
 import Field from '../Field';
-import { Task } from '@/ui/context/tasks';
+import { BUTTONS_WRAP, CLOSE_BUTTON, CONTENT, HEADER, TITLE } from './styles';
 
 type Props = {
   isOpen?: boolean;
   onDismiss: () => void;
   onAddTask: (task: Task) => void;
 };
-
-const Content = styled('div')({
-  display: 'flex',
-  flexDirection: 'column',
-  padding: '8px'
-});
-
-const DialogHeader = styled('div')({
-  position: 'relative',
-  borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
-  padding: '8px 8px 12px 8px'
-});
-
-const HeaderTitle = styled('h1')({
-  fontSize: '16px',
-  margin: 0
-});
-
-const CloseButton = styled('button')({
-  border: 'none',
-  fontSize: '16px',
-  margin: 0,
-  backgroundColor: 'transparent',
-  borderRadius: '25px',
-  fontWeight: 900,
-  transition: 'background-color 100ms ease-in',
-  color: Colors.offWhite,
-  position: 'absolute',
-  right: '4px',
-  top: '4px',
-  display: 'flex',
-  padding: '8px',
-  '&:focus': {
-    cursor: 'pointer',
-    backgroundColor: Colors.secondary,
-    outline: 'none'
-  },
-  '&:hover': {
-    cursor: 'pointer',
-    backgroundColor: Colors.secondary,
-    outline: 'none'
-  },
-  '&:active': {
-    backgroundColor: Colors.secondaryFocus,
-    boxShadow: 'none'
-  }
-});
-
-const ButtonWrap = styled('div')({
-  padding: '8px',
-  display: 'flex',
-  justifyContent: 'flex-end'
-});
 
 const TaskDialog: React.FC<Props> = ({ isOpen, onDismiss, onAddTask }) => {
   const [taskTitle, setTaskTitle] = useState<string>('');
@@ -96,24 +43,32 @@ const TaskDialog: React.FC<Props> = ({ isOpen, onDismiss, onAddTask }) => {
           borderRadius: '4px'
         }}
       >
-        <DialogHeader>
-          <HeaderTitle>Add new task</HeaderTitle>
-          <CloseButton type="button" onClick={onDismiss} aria-label="Close dialog">
+        <div css={HEADER}>
+          <h1 css={TITLE}>Add new task</h1>
+          <button
+            type="button"
+            onClick={onDismiss}
+            aria-label="Close dialog"
+            css={CLOSE_BUTTON(colors)}
+          >
             <img src={CloseIcon} alt="" width="12" height="12" />
-          </CloseButton>
-        </DialogHeader>
-        <Content>
+          </button>
+        </div>
+        <div css={CONTENT}>
           <Field
             placeholder="Need to get ’er done"
             value={taskTitle}
             onChange={setTaskTitle}
           />
-        </Content>
-        <ButtonWrap>
-          <Button onClick={handleAddTask} disable={taskTitle === ''}>
+        </div>
+        <div css={BUTTONS_WRAP}>
+          <Button onClick={handleAddTask} disabled={taskTitle === ''} variant="primary">
             Add task
           </Button>
-        </ButtonWrap>
+          <Button onClick={onDismiss} variant="secondary">
+            Cancel
+          </Button>
+        </div>
       </DialogContent>
     </DialogOverlay>
   );

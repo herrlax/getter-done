@@ -38,6 +38,11 @@ body {
   font-size: 14px;
 }
 
+h1 {
+  font-family: 'Nunito Sans Extra Light';
+  margin: 8px 0;
+}
+
 @keyframes fadeIn {
   0% {
     opacity: 0;

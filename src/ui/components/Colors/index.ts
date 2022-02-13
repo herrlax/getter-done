@@ -1,4 +1,20 @@
-const colors = {
+type Color =
+  | 'background'
+  | 'darkGrey'
+  | 'darkerGrey'
+  | 'offWhite'
+  | 'white'
+  | 'red'
+  | 'primary'
+  | 'primaryFocus'
+  | 'primaryActive'
+  | 'secondary'
+  | 'secondaryFocus'
+  | 'secondaryActive';
+
+export type ColorTheme = Record<Color, string>;
+
+const colors: ColorTheme = {
   background: '#36393F',
   darkGrey: '#101419',
   darkerGrey: '#071116',

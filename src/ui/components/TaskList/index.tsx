@@ -1,9 +1,7 @@
 import { useTasksAction, useTasksState } from '@/ui/context/tasks';
-import { styled } from 'goober';
 import React from 'react';
 import TaskItem from '../TaskItem';
-
-const List = styled('ul')({ listStyle: 'none', margin: 0, padding: 0 });
+import { LIST } from './styles';
 
 const TaskList: React.FC = () => {
   const { data } = useTasksState();
@@ -14,13 +12,13 @@ const TaskList: React.FC = () => {
   };
 
   return (
-    <List>
+    <ul css={LIST}>
       {data.map((task: Task) => (
         <li key={task.id}>
           <TaskItem task={task} onChange={handleChange} />
         </li>
       ))}
-    </List>
+    </ul>
   );
 };
 
