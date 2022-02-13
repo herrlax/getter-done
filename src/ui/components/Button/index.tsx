@@ -15,7 +15,12 @@ const Button: React.FC<Props & React.ButtonHTMLAttributes<HTMLButtonElement>> = 
   ...props
 }) => {
   return (
-    <button type="button" css={BUTTON(colors, variant, disabled)} {...props}>
+    <button
+      type="button"
+      css={BUTTON(colors, variant, disabled)}
+      disabled={disabled}
+      {...props}
+    >
       {children}
     </button>
   );
