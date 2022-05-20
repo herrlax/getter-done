@@ -23,7 +23,8 @@
     },
     "modulePaths": [
       "<rootDir>"
-    ]
+    ],
+    "testEnvironment": "jsdom"
   },
   "repository": "https://github.com/herrlax/getter-done",
   "author": "Mikael Malmqvist",
@@ -64,6 +65,7 @@
     "file-loader": "^6.2.0",
     "html-webpack-plugin": "^5.5.0",
     "jest": "^28.1.0",
+    "jest-environment-jsdom": "^28.1.0",
     "nodemon": "^2.0.16",
     "prettier": "^2.6.2",
     "style-loader": "^3.3.1",
