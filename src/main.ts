@@ -3,16 +3,13 @@ import { promises as fs } from 'fs';
 
 const isDev = process.argv[2] === '--dev';
 
-const createWindow = (): void => {
+const createWindow = () => {
   const win = new BrowserWindow({
     width: 2000,
     height: 680,
     webPreferences: {
       nodeIntegration: true,
-      enableRemoteModule: false,
       contextIsolation: true,
-      nodeIntegrationInWorker: false,
-      nodeIntegrationInSubFrames: false,
       preload: `${__dirname}/preload.js`
     }
   });
@@ -43,7 +40,7 @@ ipcMain.handle('read-file', async (event, fileName: string) => {
     const content = await readFile(fileName);
     console.info('Successfully read file ' + fileName);
     return content;
-  } catch (e) {
+  } catch (e: any) {
     console.error(e);
 
     if (e.code === 'ENOENT') {
