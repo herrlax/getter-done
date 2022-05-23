@@ -1,36 +1,36 @@
 @font-face {
-  font-family: Nunito Sans Light;
-  src: url(./fonts/nunito-sans/NunitoSans-Light.ttf);
+  font-family: 'Nunito Sans Light';
+  src: url(./assets/fonts/NunitoSans/NunitoSans-Light.ttf);
 }
 
 @font-face {
-  font-family: Nunito Sans Extra Light;
-  src: url(./fonts/nunito-sans/NunitoSans-ExtraLight.ttf);
+  font-family: 'Nunito Sans Extra Light';
+  src: url(./assets/fonts/NunitoSans/NunitoSans-ExtraLight.ttf);
 }
 
 @font-face {
-  font-family: Nunito Sans Regular;
-  src: url(./fonts/nunito-sans/NunitoSans-Regular.ttf);
+  font-family: 'Nunito Sans Regular';
+  src: url(./assets/fonts/NunitoSans/NunitoSans-Regular.ttf);
 }
 
 @font-face {
-  font-family: Nunito Sans Semi Bold;
-  src: url(./fonts/nunito-sans/NunitoSans-SemiBold.ttf);
+  font-family: 'Nunito Sans Semi Bold';
+  src: url(./assets/fonts/NunitoSans/NunitoSans-SemiBold.ttf);
 }
 
 @font-face {
-  font-family: Nunito Sans Bold;
-  src: url(./fonts/nunito-sans/NunitoSans-Bold.ttf);
+  font-family: 'Nunito Sans Bold';
+  src: url(./assets/fonts/NunitoSans/NunitoSans-Bold.ttf);
 }
 
 @font-face {
-  font-family: Nunito Sans Extra Bold;
-  src: url(./fonts/nunito-sans/NunitoSans-ExtraBold.ttf);
+  font-family: 'Nunito Sans Extra Bold';
+  src: url(./assets/fonts/NunitoSans/NunitoSans-ExtraBold.ttf);
 }
 
 body {
   margin: 0;
-  font-family: 'Nunito Sans Regular', sans-serif;
+  font-family: 'Nunito Sans Light';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-color: #36393f;
@@ -39,7 +39,7 @@ body {
 }
 
 h1 {
-  font-family: 'Nunito Sans Extra Light';
+  font-family: 'Nunito Sans Regular';
   margin: 8px 0;
 }
 
