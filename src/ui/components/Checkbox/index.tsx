@@ -1,6 +1,5 @@
 import React from 'react';
-import { CustomCheckbox } from '@reach/checkbox';
-import './index.css';
+import { CHECKBOX_WRAP } from './styles';
 
 type Props = {
   checked?: boolean;
@@ -8,19 +7,22 @@ type Props = {
   name: string;
 };
 
-const Checkbox: React.FC<Props> = ({ checked, onChange, name }) => {
+const Checkbox: React.FC<Props> = React.memo(({ checked, onChange, name }) => {
   return (
-    <CustomCheckbox
-      value={name}
-      name={name}
-      checked={checked}
-      onChange={(event) => {
-        onChange(event.target.checked);
-      }}
-    >
+    <div css={CHECKBOX_WRAP(checked)}>
+      <input
+        data-reach-custom-checkbox-input
+        type="checkbox"
+        value={name}
+        name={name}
+        checked={checked}
+        onChange={(event) => {
+          onChange(event.target.checked);
+        }}
+      />
       <span />
-    </CustomCheckbox>
+    </div>
   );
-};
+});
 
 export default Checkbox;
