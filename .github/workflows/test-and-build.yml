@@ -8,10 +8,10 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      - name: 'Use Node.js 12.19.0'
+      - name: 'Use Node.js 16.15.0'
         uses: actions/setup-node@v1
         with:
-          node-version: '12.19.0'
+          node-version: '16.15.0'
       - run: yarn install --immutable --immutable-cache --check-cache
       - run: yarn run test
       - run: yarn run build

@@ -1,15 +1,17 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import '@reach/checkbox/styles.css';
+import { createRoot } from 'react-dom/client';
 import './index.css';
 import TasksPage from './components/TasksPage';
 import Providers from './components/Providers';
 
-ReactDOM.render(
-  <React.StrictMode>
-    <Providers>
-      <TasksPage />
-    </Providers>
-  </React.StrictMode>,
-  document.getElementById('root')
-);
+const container = document.getElementById('root');
+
+if (container) {
+  createRoot(container).render(
+    <React.StrictMode>
+      <Providers>
+        <TasksPage />
+      </Providers>
+    </React.StrictMode>
+  );
+}

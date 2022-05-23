@@ -1,5 +1,5 @@
 import { useTasksAction, useTasksState } from '@/ui/context/tasks';
-import React from 'react';
+import React, { useCallback } from 'react';
 import TaskItem from '../TaskItem';
 import { LIST } from './styles';
 
@@ -7,9 +7,9 @@ const TaskList: React.FC = () => {
   const { data } = useTasksState();
   const { editTask } = useTasksAction();
 
-  const handleChange = (task: Task) => {
+  const handleChange = useCallback((task: Task) => {
     editTask(task);
-  };
+  }, []);
 
   return (
     <ul css={LIST}>

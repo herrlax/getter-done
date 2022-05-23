@@ -108,6 +108,7 @@ const curriedReducer: (state: State, action: ReducerAction) => State = produce(
 
 type ProviderProps = {
   data: Task[];
+  children?: React.ReactNode;
 };
 
 const initialState: State = {

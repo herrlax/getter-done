@@ -5,10 +5,10 @@ const webpack = require('webpack');
 module.exports = {
   mode: 'development',
   entry: './src/ui/renderer.tsx',
-  target: 'electron-renderer',
+  target: 'web',
   devtool: 'source-map',
   devServer: {
-    contentBase: path.join(__dirname, 'dist/renderer.js'),
+    static: path.join(__dirname, 'dist/renderer.js'),
     compress: true,
     port: 9000
   },
@@ -30,13 +30,16 @@ module.exports = {
         use: ['style-loader', 'css-loader']
       },
       {
-        test: /\.(woff(2)?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,
+        test: /\.(woff(2)?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/
+      },
+      {
+        test: /\.(svg)(\?v=\d+\.\d+\.\d+)?$/,
         use: [
           {
             loader: 'file-loader',
             options: {
               name: '[name].[ext]',
-              outputPath: 'fonts/'
+              outputPath: 'assets/icons/'
             }
           }
         ]

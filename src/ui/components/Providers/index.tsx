@@ -5,7 +5,9 @@ type ProviderData = {
   tasks: Task[];
 };
 
-const Providers: React.FC = ({ children }) => {
+type Props = { children?: React.ReactNode };
+
+const Providers: React.FC<Props> = ({ children }) => {
   const [data, setData] = useState<ProviderData | undefined>(undefined);
 
   useEffect(() => {
