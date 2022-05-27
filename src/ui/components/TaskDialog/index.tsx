@@ -9,12 +9,11 @@ import Field from '../Field';
 import { BUTTONS_WRAP, CLOSE_BUTTON, CONTENT, HEADER, TITLE } from './styles';
 
 type Props = {
-  isOpen?: boolean;
   onDismiss: () => void;
   onAddTask: (task: Task) => void;
 };
 
-const TaskDialog: React.FC<Props> = ({ isOpen, onDismiss, onAddTask }) => {
+const TaskDialog: React.FC<Props> = ({ onDismiss, onAddTask }) => {
   const [taskTitle, setTaskTitle] = useState<string>('');
 
   const handleAddTask = () => {
@@ -25,13 +24,12 @@ const TaskDialog: React.FC<Props> = ({ isOpen, onDismiss, onAddTask }) => {
       comments: [],
       done: false
     });
-    setTaskTitle('');
     onDismiss();
   };
 
   return (
     <DialogOverlay
-      isOpen={isOpen}
+      isOpen
       onDismiss={onDismiss}
       style={{ backgroundColor: 'rgba(0, 0, 0, 0.75)' }}
     >
