@@ -9,12 +9,12 @@ type Props = {
   onChange: (task: Task) => void;
 };
 
-const TaskItem: React.FC<Props> = ({ task, onChange }) => {
+const TaskItem: React.FC<Props> = React.memo(({ task, onChange }) => {
   const [checked, setChecked] = useState(task.done);
   const debounce = useDebounce();
 
   const handleChange = (value: boolean) => {
-    debounce(() => onChange({ ...task, done: value }), 250);
+    debounce(() => onChange({ ...task, done: value }), 1000);
     setChecked(value);
   };
 
@@ -24,6 +24,6 @@ const TaskItem: React.FC<Props> = ({ task, onChange }) => {
       {task.title}
     </label>
   );
-};
+});
 
 export default TaskItem;
