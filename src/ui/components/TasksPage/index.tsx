@@ -54,11 +54,12 @@ const TasksPage = () => {
           </div>
         )}
       </div>
-      <TaskDialog
-        isOpen={taskDialogIsOpen}
-        onDismiss={() => setTaskDialogIsOpen(false)}
-        onAddTask={(task: Task) => addTask(task)}
-      />
+      {taskDialogIsOpen && (
+        <TaskDialog
+          onDismiss={() => setTaskDialogIsOpen(false)}
+          onAddTask={(task: Task) => addTask(task)}
+        />
+      )}
     </React.Fragment>
   );
 };

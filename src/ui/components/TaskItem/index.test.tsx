@@ -11,6 +11,8 @@ const mockTask = {
 };
 
 describe('<TaskItem />', function () {
+  jest.useFakeTimers();
+
   it('renders TaskItem', () => {
     render(<TaskItem task={mockTask} onChange={() => {}} />);
   });
@@ -24,6 +26,8 @@ describe('<TaskItem />', function () {
     if (check) {
       fireEvent.click(check);
     }
+
+    jest.runAllTimers();
 
     await waitFor(() => expect(spy).toHaveBeenCalledTimes(1));
   });

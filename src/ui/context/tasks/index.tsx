@@ -38,7 +38,7 @@ type ReducerAction =
   | { type: 'add_task_success' }
   | { type: 'add_task_errored' }
   | { type: 'edit_task_init'; data: Task }
-  | { type: 'edit_task_success' }
+  | { type: 'edit_task_success'; data: Task }
   | { type: 'edit_task_errored' }
   | { type: 'sync_tasks_init' }
   | { type: 'sync_tasks_success'; data: Task[] }
@@ -47,64 +47,66 @@ type ReducerAction =
 const TasksStateContext = React.createContext<State | undefined>(undefined);
 const TasksActionContext = React.createContext<Action | undefined>(undefined);
 
-const curriedReducer: (state: State, action: ReducerAction) => State = produce(
-  (draft: State, action: ReducerAction) => {
-    switch (action.type) {
-      case 'add_task_init':
-        draft.addTask.isLoading = true;
-        draft.addTask.isError = false;
-        draft.addTask.pendingTask = action.data;
-        return;
+const tasksReducer = (draft: State, action: ReducerAction) => {
+  switch (action.type) {
+    case 'add_task_init':
+      draft.addTask.isLoading = true;
+      draft.addTask.isError = false;
+      draft.addTask.pendingTask = action.data;
+      return;
 
-      case 'add_task_success':
-        draft.addTask.isLoading = false;
-        draft.addTask.isError = false;
-        draft.addTask.pendingTask = undefined;
-        return;
+    case 'add_task_success':
+      draft.addTask.isLoading = false;
+      draft.addTask.pendingTask = undefined;
+      return;
 
-      case 'add_task_errored':
-        draft.addTask.isLoading = false;
-        draft.addTask.isError = true;
-        return;
+    case 'add_task_errored':
+      draft.addTask.isLoading = false;
+      draft.addTask.isError = true;
+      return;
 
-      case 'edit_task_init':
-        draft.editTask.isLoading = true;
-        draft.editTask.isError = false;
-        draft.editTask.task = action.data;
-        return;
+    case 'edit_task_init':
+      draft.editTask.isLoading = true;
+      draft.editTask.isError = false;
+      draft.editTask.task = action.data;
+      return;
 
-      case 'edit_task_success':
-        draft.editTask.isLoading = false;
-        draft.editTask.isError = false;
-        draft.editTask.task = undefined;
-        return;
+    case 'edit_task_success':
+      const idx = draft.data.findIndex((i) => i.id === draft.editTask.task?.id);
 
-      case 'edit_task_errored':
-        draft.editTask.isLoading = false;
-        draft.editTask.isError = true;
-        return;
+      if (idx !== -1) {
+        draft.data[idx] = action.data;
+      }
 
-      case 'sync_tasks_init':
-        draft.syncTasks.isLoading = true;
-        draft.syncTasks.isError = false;
-        return;
+      draft.editTask.isLoading = false;
+      draft.editTask.task = undefined;
+      return;
 
-      case 'sync_tasks_success':
-        draft.syncTasks.isLoading = false;
-        draft.syncTasks.isError = false;
-        draft.data = action.data;
-        return;
+    case 'edit_task_errored':
+      draft.editTask.isLoading = false;
+      draft.editTask.isError = true;
+      return;
 
-      case 'sync_tasks_errored':
-        draft.syncTasks.isLoading = false;
-        draft.syncTasks.isError = true;
-        return;
+    case 'sync_tasks_init':
+      draft.syncTasks.isLoading = true;
+      draft.syncTasks.isError = false;
+      return;
 
-      default:
-        throw new Error('Unsupported action');
-    }
+    case 'sync_tasks_success':
+      draft.syncTasks.isLoading = false;
+      draft.data = action.data;
+
+      return;
+
+    case 'sync_tasks_errored':
+      draft.syncTasks.isLoading = false;
+      draft.syncTasks.isError = true;
+      return;
+
+    default:
+      return;
   }
-);
+};
 
 type ProviderProps = {
   data: Task[];
@@ -131,7 +133,7 @@ const initialState: State = {
 
 const TasksProvider: React.FC<ProviderProps> = ({ data, children }) => {
   const [state, dispatch]: [State, React.Dispatch<ReducerAction>] = useReducer(
-    curriedReducer,
+    produce(tasksReducer),
     {
       ...initialState,
       data: [...initialState.data, ...data]
@@ -185,7 +187,6 @@ const TasksProvider: React.FC<ProviderProps> = ({ data, children }) => {
       if (typeof state.addTask.pendingTask !== 'undefined') {
         try {
           await window.electron.writeTasks([...state.data, state.addTask.pendingTask]);
-
           if (isCurrent) {
             dispatch({ type: 'add_task_success' });
             dispatch({ type: 'sync_tasks_init' });
@@ -213,13 +214,14 @@ const TasksProvider: React.FC<ProviderProps> = ({ data, children }) => {
     const update = async () => {
       if (typeof state.editTask.task !== 'undefined') {
         try {
-          await window.electron.writeTasks([...state.data, state.editTask.task]);
+          const updatedTask = await window.electron.updateTask(state.editTask.task);
 
           if (isCurrent) {
-            dispatch({ type: 'edit_task_success' });
-            dispatch({ type: 'sync_tasks_init' });
+            dispatch({ type: 'edit_task_success', data: updatedTask });
           }
         } catch (e) {
+          console.error(e);
+
           if (isCurrent) {
             dispatch({ type: 'edit_task_errored' });
           }

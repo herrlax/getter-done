@@ -10,5 +10,6 @@ declare interface Window {
   electron: {
     writeTasks(tasks: Task[]): Promise<void>;
     getTasks(): Promise<{ [id: string]: Task }>;
+    updateTask(task: Task): Promise<Task>;
   };
 }

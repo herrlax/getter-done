@@ -8,10 +8,8 @@ const container = document.getElementById('root');
 
 if (container) {
   createRoot(container).render(
-    <React.StrictMode>
-      <Providers>
-        <TasksPage />
-      </Providers>
-    </React.StrictMode>
+    <Providers>
+      <TasksPage />
+    </Providers>
   );
 }

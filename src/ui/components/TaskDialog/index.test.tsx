@@ -4,13 +4,13 @@ import TaskDialog from '.';
 
 describe('<TaskDialog />', function () {
   it('renders TaskDialog', () => {
-    render(<TaskDialog isOpen onDismiss={() => {}} onAddTask={() => {}} />);
+    render(<TaskDialog onDismiss={() => {}} onAddTask={() => {}} />);
   });
 
   it('runs onDismiss when clicking Close button', async () => {
     const spy = jest.fn();
     const { getByLabelText } = render(
-      <TaskDialog isOpen onDismiss={spy} onAddTask={() => {}} />
+      <TaskDialog onDismiss={spy} onAddTask={() => {}} />
     );
 
     fireEvent.click(getByLabelText('Close dialog'));
@@ -21,9 +21,7 @@ describe('<TaskDialog />', function () {
   it('Add task button is disable when nothing is entered in field', async () => {
     const spy = jest.fn();
 
-    const { getByText } = render(
-      <TaskDialog isOpen onDismiss={() => {}} onAddTask={spy} />
-    );
+    const { getByText } = render(<TaskDialog onDismiss={() => {}} onAddTask={spy} />);
 
     await waitFor(() => expect(getByText('Add task')).toHaveAttribute('disabled'));
 
@@ -35,7 +33,7 @@ describe('<TaskDialog />', function () {
   it('Runs onAddTask when clicking Add task button', async () => {
     const spy = jest.fn();
     const { getByText, getByPlaceholderText } = render(
-      <TaskDialog isOpen onDismiss={() => {}} onAddTask={spy} />
+      <TaskDialog onDismiss={() => {}} onAddTask={spy} />
     );
 
     fireEvent.change(getByPlaceholderText('Need to get ’er done'), {
