@@ -1,8 +1,8 @@
 # Getter done
 
-_To get the job done without procrastination_ - [Urban Dictionary](https://www.urbandictionary.com/define.php?term=getter%20done)
+_**Getter done** – To get the job done without procrastination_ - [Urban Dictionary](https://www.urbandictionary.com/define.php?term=getter%20done)
 
-**Getter done** is a simple todo app for desktop to get ’er done!
+This is a simple todo app for desktop to getter' done!
 
 Built with TypeScript, Electron and React. Project was set up mostly using the steps [found here](https://dev.to/franamorim/tutorial-reminder-widget-with-electron-react-1hj9).
 
